@@ -18,6 +18,6 @@ var_dump($config['your_environment_variable']);
 
 ### Load into environment variables
 ```php
-TinyApps\YamlEnv\EnvLoader::init(__DIR__ . '/env.yml');
+TinyApps\YamlConfig\EnvLoader::init(__DIR__ . '/env.yml');
 var_dump(getenv('your_environment_variable'));
 ```
