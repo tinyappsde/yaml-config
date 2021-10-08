@@ -11,9 +11,9 @@ PHP ^7.4 or ^8.0 and php-yaml extension
 
 ### Config
 ```php
-$config = new \TinyApps\YamlConfig\Config(__DIR__ . '/env.yml');
-var_dump($config->get('your_environment_variable')); // or
-var_dump($config['your_environment_variable']);
+$config = new \TinyApps\YamlConfig\Config(__DIR__ . '/config.yml');
+var_dump($config->get('your_variable')); // or
+var_dump($config['your_variable']);
 ```
 
 ### Load into environment variables
