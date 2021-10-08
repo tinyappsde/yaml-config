@@ -1,0 +1,33 @@
+{
+	"name": "tinyapps/yaml-env",
+	"description": "Simple PHP library for using yaml config files to set environment variables",
+	"type": "library",
+	"keywords": [
+		"env",
+		"environment variables",
+		"yaml",
+		"yml"
+	],
+	"require": {
+		"php": "^7.4 || ^8.0",
+		"ext-yaml": "*"
+	},
+	"require-dev": {
+		"phpunit/phpunit": "^9.5"
+	},
+	"autoload": {
+		"psr-4": {
+			"TinyApps\\YamlEnv\\": "src"
+		}
+	},
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "Dion Purushotham",
+			"email": "hello@tinyapps.de"
+		}
+	],
+	"scripts": {
+		"test": "vendor/bin/phpunit tests --bootstrap vendor/autoload.php"
+	}
+}
