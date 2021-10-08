@@ -1,12 +1,11 @@
 {
-	"name": "tinyapps/yaml-env",
-	"description": "Simple PHP library for using yaml config files to set environment variables",
+	"name": "tinyapps/yaml-config",
+	"description": "Simple PHP library for using yaml config files",
 	"type": "library",
 	"keywords": [
-		"env",
-		"environment variables",
 		"yaml",
-		"yml"
+		"config",
+		"env"
 	],
 	"require": {
 		"php": "^7.4 || ^8.0",
@@ -17,7 +16,7 @@
 	},
 	"autoload": {
 		"psr-4": {
-			"TinyApps\\YamlEnv\\": "src"
+			"TinyApps\\YamlConfig\\": "src"
 		}
 	},
 	"license": "MIT",

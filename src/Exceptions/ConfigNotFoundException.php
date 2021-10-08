@@ -1,5 +1,5 @@
 <?php
 
-namespace TinyApps\YamlEnv\Exceptions;
+namespace TinyApps\YamlConfig\Exceptions;
 
 class ConfigNotFoundException extends \Exception {}

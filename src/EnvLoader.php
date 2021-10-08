@@ -1,11 +1,11 @@
 <?php
 
-namespace TinyApps\YamlEnv;
+namespace TinyApps\YamlConfig;
 
-use TinyApps\YamlEnv\Exceptions\ConfigNotFoundException;
-use TinyApps\YamlEnv\Exceptions\ConfigParsingException;
+use TinyApps\YamlConfig\Exceptions\ConfigNotFoundException;
+use TinyApps\YamlConfig\Exceptions\ConfigParsingException;
 
-class Loader {
+class EnvLoader {
 	/**
 	 * Parse config file into environment
 	 *
