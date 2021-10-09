@@ -22,8 +22,8 @@ class EnvLoader {
 		}
 
 		if (
-			!str_contains(strtolower($filePath), '.yml')
-			&& !str_contains(strtolower($filePath), '.yaml')
+			strpos(strtolower($filePath), '.yml') === false
+			&& strpos(strtolower($filePath), '.yaml') === false
 		) {
 			$filePath .= '.yml';
 		}
