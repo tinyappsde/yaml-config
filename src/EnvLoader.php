@@ -18,7 +18,14 @@ class EnvLoader {
 	 */
 	public static function init(string $filePath) {
 		if (!file_exists($filePath)) {
-			throw new ConfigNotFoundException();
+			throw new ConfigNotFoundException("Config at $filePath not found.");
+		}
+
+		if (
+			!str_contains(strtolower($filePath), '.yml')
+			&& !str_contains(strtolower($filePath), '.yaml')
+		) {
+			$filePath .= '.yml';
 		}
 
 		if (
