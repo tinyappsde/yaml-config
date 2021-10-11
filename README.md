@@ -1,4 +1,6 @@
-# YAML Env
+[![Unit Tests](https://github.com/tinyappsde/yaml-config/actions/workflows/unit-test.yml/badge.svg?branch=master)](https://github.com/tinyappsde/yaml-config/actions/workflows/unit-test.yml)
+
+# YAML Config
 Super simple PHP library for using yaml config files and (optional) loading into environment variables.
 
 ## Requirements
