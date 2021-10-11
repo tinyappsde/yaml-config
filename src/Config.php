@@ -24,14 +24,26 @@ class Config implements \ArrayAccess {
 	/**
 	 * Returns a single value from a config file in static context
 	 *
-	 * @param string $filePath
+	 * @param string $filePathOrName
 	 * @param mixed $property
 	 *
 	 * @return mixed
 	 */
-	public static function singleValue(string $filePath, mixed $property): mixed {
-		$config = new self($filePath);
+	public static function singleValue(string $filePathOrName, mixed $property): mixed {
+		$config = new self($filePathOrName);
 		return $config[$property] ?? null;
+	}
+
+	/**
+	 * Returns true if a config file with the given name or path exists
+	 *
+	 * @param string $filePath
+	 *
+	 * @return bool
+	 */
+	public static function exists(string $filePathOrName): mixed {
+		$filePath = self::computedPath($filePathOrName);
+		return file_exists($filePath);
 	}
 
 	/**
@@ -44,17 +56,8 @@ class Config implements \ArrayAccess {
 	 *
 	 * @return void
 	 */
-	public function __construct(string $filePath) {
-		if (!empty(self::$configDir)) {
-			$filePath = realpath(self::$configDir) . "/$filePath";
-		}
-
-		if (
-			strpos(strtolower($filePath), '.yml') === false
-			&& strpos(strtolower($filePath), '.yaml') === false
-		) {
-			$filePath .= '.yml';
-		}
+	public function __construct(string $filePathOrName) {
+		$filePath = self::computedPath($filePathOrName);
 
 		if (!file_exists($filePath)) {
 			throw new ConfigNotFoundException("Config at $filePath not found.");
@@ -68,6 +71,26 @@ class Config implements \ArrayAccess {
 		}
 
 		$this->values = $config;
+	}
+
+	/**
+	 * @param string $filePathOrName
+	 *
+	 * @return string
+	 */
+	protected static function computedPath(string $filePathOrName): string {
+		if (!empty(self::$configDir)) {
+			$filePathOrName = realpath(self::$configDir) . "/$filePathOrName";
+		}
+
+		if (
+			strpos(strtolower($filePathOrName), '.yml') === false
+			&& strpos(strtolower($filePathOrName), '.yaml') === false
+		) {
+			$filePathOrName .= '.yml';
+		}
+
+		return $filePathOrName;
 	}
 
 	public function offsetExists($key) {
