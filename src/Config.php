@@ -93,23 +93,23 @@ class Config implements \ArrayAccess {
 		return $filePathOrName;
 	}
 
-	public function offsetExists($key) {
+	public function offsetExists(mixed $key): bool {
 		return isset($this->values[$key]);
 	}
 
-	public function offsetGet($key) {
+	public function offsetGet(mixed $key): mixed {
 		return $this->values[$key] ?? null;
 	}
 
-	public function get($key) {
+	public function get(mixed $key): mixed {
 		return $this->values[$key] ?? null;
 	}
 
-	public function offsetSet($key, $values) {
+	public function offsetSet(mixed $key, mixed $values): void {
 		throw new \BadMethodCallException('Cannot write to config files.');
 	}
 
-	public function offsetUnset($key) {
+	public function offsetUnset(mixed $key): void {
 		throw new \BadMethodCallException('Cannot write to config files.');
 	}
 }
