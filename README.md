@@ -4,7 +4,7 @@
 Super simple PHP library for using yaml config files and (optional) loading into environment variables.
 
 ## Requirements
-PHP ^7.4 or ^8.0 and php-yaml extension
+PHP ^8.0 or ^8.1 and php-yaml extension
 
 ## Installation
 `composer require tinyapps/yaml-config`
