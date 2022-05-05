@@ -9,6 +9,10 @@ use TinyApps\YamlConfig\EnvLoader;
 
 final class EnvLoaderTest extends TestCase {
 
+	/**
+	 * @throws ConfigParsingException
+	 * @throws ConfigNotFoundException
+	 */
 	public function testLoader(): void {
 		EnvLoader::init(__DIR__ . '/example-configs/env.yml');
 
@@ -18,11 +22,17 @@ final class EnvLoaderTest extends TestCase {
 		);
 	}
 
+	/**
+	 * @throws ConfigParsingException
+	 */
 	public function testNotFoundException(): void {
 		$this->expectException(ConfigNotFoundException::class);
 		EnvLoader::init(__DIR__ . '/example-configs/not_existing.yml');
 	}
 
+	/**
+	 * @throws ConfigNotFoundException
+	 */
 	public function testParsingException(): void {
 		$this->expectException(ConfigParsingException::class);
 		EnvLoader::init(__DIR__ . '/example-configs/invalid.yml');

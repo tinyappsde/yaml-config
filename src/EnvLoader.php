@@ -2,6 +2,7 @@
 
 namespace TinyApps\YamlConfig;
 
+use Symfony\Component\Yaml\Yaml;
 use TinyApps\YamlConfig\Exceptions\ConfigNotFoundException;
 use TinyApps\YamlConfig\Exceptions\ConfigParsingException;
 
@@ -16,20 +17,20 @@ class EnvLoader {
 	 *
 	 * @return void
 	 */
-	public static function init(string $filePath) {
+	public static function init(string $filePath): void {
 		if (!file_exists($filePath)) {
 			throw new ConfigNotFoundException("Config at $filePath not found.");
 		}
 
 		if (
-			strpos(strtolower($filePath), '.yml') === false
-			&& strpos(strtolower($filePath), '.yaml') === false
+			!str_contains(strtolower($filePath), '.yml')
+			&& !str_contains(strtolower($filePath), '.yaml')
 		) {
 			$filePath .= '.yml';
 		}
 
 		if (
-			(!$config = yaml_parse_file($filePath))
+			(!$config = Yaml::parseFile($filePath))
 			|| !is_array($config)
 		) {
 			throw new ConfigParsingException();

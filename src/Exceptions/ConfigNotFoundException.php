@@ -2,4 +2,6 @@
 
 namespace TinyApps\YamlConfig\Exceptions;
 
-class ConfigNotFoundException extends \Exception {}
+use Exception;
+
+class ConfigNotFoundException extends Exception {}

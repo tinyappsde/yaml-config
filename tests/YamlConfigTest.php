@@ -9,6 +9,10 @@ use TinyApps\YamlConfig\Exceptions\ConfigParsingException;
 
 final class YamlConfigTest extends TestCase {
 
+	/**
+	 * @throws ConfigParsingException
+	 * @throws ConfigNotFoundException
+	 */
 	public function testLoader(): void {
 		$config = new Config(__DIR__ . '/example-configs/env.yml');
 

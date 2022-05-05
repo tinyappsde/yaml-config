@@ -2,10 +2,13 @@
 
 namespace TinyApps\YamlConfig;
 
+use ArrayAccess;
+use BadMethodCallException;
+use Symfony\Component\Yaml\Yaml;
 use TinyApps\YamlConfig\Exceptions\ConfigNotFoundException;
 use TinyApps\YamlConfig\Exceptions\ConfigParsingException;
 
-class Config implements \ArrayAccess {
+class Config implements ArrayAccess {
 	protected array $values;
 	protected static ?string $configDir = null;
 
@@ -17,7 +20,7 @@ class Config implements \ArrayAccess {
 	 *
 	 * @return void
 	 */
-	public static function setConfigDir(string $configDir) {
+	public static function setConfigDir(string $configDir): void {
 		self::$configDir = $configDir;
 	}
 
@@ -27,6 +30,8 @@ class Config implements \ArrayAccess {
 	 * @param string $filePathOrName
 	 * @param mixed $property
 	 *
+	 * @throws ConfigNotFoundException
+	 * @throws ConfigParsingException
 	 * @return mixed
 	 */
 	public static function singleValue(string $filePathOrName, mixed $property): mixed {
@@ -37,11 +42,11 @@ class Config implements \ArrayAccess {
 	/**
 	 * Returns true if a config file with the given name or path exists
 	 *
-	 * @param string $filePath
+	 * @param string $filePathOrName
 	 *
 	 * @return bool
 	 */
-	public static function exists(string $filePathOrName): mixed {
+	public static function exists(string $filePathOrName): bool {
 		$filePath = self::computedPath($filePathOrName);
 		return file_exists($filePath);
 	}
@@ -49,7 +54,7 @@ class Config implements \ArrayAccess {
 	/**
 	 * Parse config file
 	 *
-	 * @param string $filePath if config dir is set this will be prepended, if no extension is included it will be appended as .yml
+	 * @param string $filePathOrName if config dir is set this will be prepended, if no extension is included it will be appended as .yml
 	 *
 	 * @throws ConfigNotFoundException
 	 * @throws ConfigParsingException
@@ -64,7 +69,7 @@ class Config implements \ArrayAccess {
 		}
 
 		if (
-			(!$config = yaml_parse_file($filePath))
+			(!$config = Yaml::parseFile($filePath))
 			|| !is_array($config)
 		) {
 			throw new ConfigParsingException();
@@ -84,8 +89,8 @@ class Config implements \ArrayAccess {
 		}
 
 		if (
-			strpos(strtolower($filePathOrName), '.yml') === false
-			&& strpos(strtolower($filePathOrName), '.yaml') === false
+			!str_contains(strtolower($filePathOrName), '.yml')
+			&& !str_contains(strtolower($filePathOrName), '.yaml')
 		) {
 			$filePathOrName .= '.yml';
 		}
@@ -93,23 +98,23 @@ class Config implements \ArrayAccess {
 		return $filePathOrName;
 	}
 
-	public function offsetExists(mixed $key): bool {
-		return isset($this->values[$key]);
+	public function offsetExists(mixed $offset): bool {
+		return isset($this->values[$offset]);
 	}
 
-	public function offsetGet(mixed $key): mixed {
-		return $this->values[$key] ?? null;
+	public function offsetGet(mixed $offset): mixed {
+		return $this->values[$offset] ?? null;
 	}
 
 	public function get(mixed $key): mixed {
 		return $this->values[$key] ?? null;
 	}
 
-	public function offsetSet(mixed $key, mixed $values): void {
-		throw new \BadMethodCallException('Cannot write to config files.');
+	public function offsetSet(mixed $offset, mixed $value): void {
+		throw new BadMethodCallException('Cannot write to config files.');
 	}
 
-	public function offsetUnset(mixed $key): void {
-		throw new \BadMethodCallException('Cannot write to config files.');
+	public function offsetUnset(mixed $offset): void {
+		throw new BadMethodCallException('Cannot write to config files.');
 	}
 }

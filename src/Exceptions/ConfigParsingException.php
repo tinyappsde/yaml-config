@@ -2,4 +2,6 @@
 
 namespace TinyApps\YamlConfig\Exceptions;
 
-class ConfigParsingException extends \Exception {}
+use Exception;
+
+class ConfigParsingException extends Exception {}
