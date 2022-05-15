@@ -24,6 +24,10 @@ final class YamlConfigTest extends TestCase {
 			'lorem ipsum',
 			$config['test'],
 		);
+		$this->assertEquals(
+			'lorem ipsum',
+			$config->test,
+		);
 	}
 
 	public function testConfigDir(): void {
@@ -37,6 +41,17 @@ final class YamlConfigTest extends TestCase {
 		$this->assertEquals(
 			'lorem ipsum',
 			$config['test'],
+		);
+	}
+
+	/**
+	 * @throws ConfigParsingException
+	 * @throws ConfigNotFoundException
+	 */
+	public function testGetConfigValue(): void {
+		$this->assertEquals(
+			'lorem ipsum',
+			Config::getConfigValue('env', 'test'),
 		);
 	}
 

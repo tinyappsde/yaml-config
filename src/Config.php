@@ -4,6 +4,7 @@ namespace TinyApps\YamlConfig;
 
 use ArrayAccess;
 use BadMethodCallException;
+use JetBrains\PhpStorm\Deprecated;
 use Symfony\Component\Yaml\Yaml;
 use TinyApps\YamlConfig\Exceptions\ConfigNotFoundException;
 use TinyApps\YamlConfig\Exceptions\ConfigParsingException;
@@ -34,9 +35,24 @@ class Config implements ArrayAccess {
 	 * @throws ConfigParsingException
 	 * @return mixed
 	 */
-	public static function singleValue(string $filePathOrName, mixed $property): mixed {
+	public static function getConfigValue(string $filePathOrName, mixed $property): mixed {
 		$config = new self($filePathOrName);
 		return $config[$property] ?? null;
+	}
+
+	/**
+	 * @param string $filePathOrName
+	 * @param mixed $property
+	 *
+	 * @throws ConfigNotFoundException
+	 * @throws ConfigParsingException
+	 * @return mixed
+	 *
+	 * @deprecated method renamed to getConfigValue
+	 */
+	#[Deprecated(reason: 'Renamed to ::getConfigValue', replacement: '%class%::getConfigValue(%parametersList%)')]
+	public static function singleValue(string $filePathOrName, mixed $property): mixed {
+		return self::getConfigValue($filePathOrName, $property);
 	}
 
 	/**
@@ -116,5 +132,9 @@ class Config implements ArrayAccess {
 
 	public function offsetUnset(mixed $offset): void {
 		throw new BadMethodCallException('Cannot write to config files.');
+	}
+
+	public function __get(mixed $key): mixed {
+		return $this->values[$key] ?? null;
 	}
 }
